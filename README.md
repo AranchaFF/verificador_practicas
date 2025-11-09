@@ -425,13 +425,13 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ```
 MIT License
 
-Copyright (c) 2025 SmartMind - Arancha Fernández
+Copyright (c) 2025 - Arancha Fernández
 
 Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia
 de este software y archivos de documentación asociados (el "Software"), para usar
-el Software sin restricciones, incluyendo sin limitación los derechos de usar,
-copiar, modificar, fusionar, publicar, distribuir, sublicenciar y/o vender copias
-del Software.
+el Software sin restricciones, **siempre que se incluya la atribución a Arancha Fernández** como autora original del proyecto.
+
+El software se proporciona "tal cual", sin garantía de ningún tipo, expresa o implícita.
 ```
 
 ---
