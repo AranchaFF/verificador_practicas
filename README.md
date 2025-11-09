@@ -1,166 +1,471 @@
-# 🧠 Verificador de Prácticas — SmartMind
+# 📋 Verificador de Prácticas SEPE — SmartMind
 
-Aplicación desarrollada en **Python + Streamlit** para automatizar la verificación de las horas de prácticas de los alumnos en empresas colaboradoras, comparando los datos de fichajes con los módulos cursados y los informes del SEPE.
+<div align="center">
 
-Permite calcular automáticamente el **porcentaje de asistencia por módulo**, verificar si cada alumno supera el **75 % obligatorio**, y generar un informe compatible con la plantilla oficial del SEPE.
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
+![Streamlit](https://img.shields.io/badge/streamlit-1.39%2B-red)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-success)
 
----
+**Sistema automatizado de validación de horas de prácticas para centros educativos**
 
-## 📦 Requisitos del sistema
+[Características](#-características-principales) • [Instalación](#-instalación) • [Uso](#-uso) • [Documentación](#-documentación)
 
-Antes de ejecutar el proyecto, asegúrate de tener instalado:
-
-- 🐍 **Python 3.10 o superior** → [Descargar Python](https://www.python.org/downloads/)
-- 💻 **Visual Studio Code** → [Descargar VS Code](https://code.visualstudio.com/)
-- 🧩 **Git** → [Descargar Git](https://git-scm.com/download/win)
-- (Opcional) **Anaconda** o **virtualenv** para crear un entorno aislado
+</div>
 
 ---
 
-## ⚙️ Instalación paso a paso
+## 📖 Descripción
+
+**Verificador de Prácticas SEPE** es una aplicación web desarrollada en Python + Streamlit que automatiza completamente el proceso de verificación de las horas de prácticas de los alumnos en empresas colaboradoras.
+
+El sistema permite:
+- ✅ Calcular automáticamente el **porcentaje de asistencia por módulo**
+- ✅ Verificar si cada alumno supera el **75% obligatorio** del SEPE
+- ✅ Generar informes compatibles con la **plantilla oficial del SEPE**
+- ✅ Detectar automáticamente empresas y horas trabajadas desde fichajes
+- ✅ Crear backups automáticos y mantener historial de validaciones
+
+---
+
+## 🎯 Características principales
+
+### 🔍 Análisis inteligente de fichajes
+- Extracción automática de horas desde archivos de texto
+- Soporte para múltiples formatos horarios (HH:MM, HH.MM, rangos)
+- Detección automática del nombre de empresa
+- Validación de coincidencia empresa asignada vs. detectada
+
+### 📊 Gestión de datos
+- Carga masiva de fichajes mediante archivos ZIP
+- Integración directa con Excel (alumnos y plantilla SEPE)
+- Cálculo automático de porcentajes de asistencia
+- Actualización inteligente de la plantilla SEPE
+
+### 🛡️ Seguridad y trazabilidad
+- Backups automáticos antes de cada actualización
+- Historial completo de validaciones con timestamp
+- Exportación de evidencias por alumno en formato ZIP
+- Sistema de observaciones y alertas automáticas
+
+### 🎨 Interfaz intuitiva
+- Dashboard interactivo con métricas en tiempo real
+- Visor detallado alumno por alumno
+- Visualización de fichajes y textos extraídos
+- Configuración personalizable de umbrales
+
+---
+
+## 💻 Requisitos del sistema
+
+### Software necesario
+
+| Componente | Versión mínima | Descarga |
+|------------|----------------|----------|
+| 🐍 Python | 3.10+ | [python.org](https://www.python.org/downloads/) |
+| 💻 VS Code | Latest | [code.visualstudio.com](https://code.visualstudio.com/) |
+| 🧩 Git | 2.0+ | [git-scm.com](https://git-scm.com/) |
+
+### Dependencias Python
+
+```txt
+streamlit>=1.39.0
+pandas>=2.2.0
+openpyxl>=3.1.0
+rapidfuzz>=3.6.0
+python-dateutil>=2.8.0
+```
+
+> **Nota:** Para OCR de imágenes (opcional): `pytesseract`, `opencv-python`, `Pillow`
+
+---
+
+## 🚀 Instalación
 
 ### 1️⃣ Clonar el repositorio
-
-Abre la terminal (PowerShell o Git Bash) y ejecuta:
 
 ```bash
 git clone https://github.com/AranchaFF/verificador_practicas.git
 cd verificador_practicas
+```
 
-2️⃣ Crear y activar un entorno virtual
-# Crear entorno virtual llamado .venv
+### 2️⃣ Crear entorno virtual (recomendado)
+
+**Windows:**
+```powershell
+# Crear entorno virtual
 python -m venv .venv
 
-# Activar entorno virtual en Windows
-.\.venv\Scripts\activate
+# Activar entorno
+.\.venv\Scripts\Activate
+```
 
-# Activar entorno virtual en Linux / macOS
+**Linux/macOS:**
+```bash
+# Crear entorno virtual
+python3 -m venv .venv
+
+# Activar entorno
 source .venv/bin/activate
+```
 
-3️⃣ Instalar las dependencias necesarias
-# Instalar paquetes requeridos
-pip install streamlit pandas openpyxl Pillow
+### 3️⃣ Instalar dependencias
 
-# Crear requirements.txt para futuras instalaciones
-pip freeze > requirements.txt
+```bash
+# Actualizar pip
+python -m pip install --upgrade pip
 
-# Alternativamente, si ya tienes requirements.txt
+# Instalar dependencias básicas
+pip install streamlit pandas openpyxl rapidfuzz python-dateutil
+
+# O instalar desde requirements.txt
 pip install -r requirements.txt
+```
 
-📂 Estructura del proyecto
+### 4️⃣ Verificar instalación
+
+```bash
+python -c "import streamlit, pandas, openpyxl, rapidfuzz; print('✅ Instalación correcta')"
+```
+
+---
+
+## 📂 Estructura del proyecto
+
+```
 verificador_practicas/
 │
-├── app.py                     # Interfaz principal de Streamlit
-├── src/
-│   ├── analizador_fichajes.py # Lógica de análisis de fichajes
-│   ├── generador_informes.py  # Genera el Excel con porcentajes
-│   └── utils.py               # Funciones auxiliares
+├── 📄 app.py                    # Aplicación principal Streamlit
+├── 📄 procesar_datos.py         # Lógica de procesamiento y validación
+├── 📄 requirements.txt          # Dependencias del proyecto
+├── 📄 README.md                 # Documentación (este archivo)
 │
-├── data/
-│   ├── alumnos.xlsx           # Datos de alumnos, módulos y horas totales
-│   ├── sepe_plantilla.xlsx    # Plantilla del SEPE
-│   └── fichajes.zip           # Fichajes de ejemplo (archivos TXT)
+├── 📁 data/                     # Archivos de entrada (autogenerado)
+│   ├── alumnos.xlsx            # Datos de alumnos y módulos
+│   ├── sepe_plantilla.xlsx     # Plantilla oficial SEPE
+│   └── fichajes.zip            # Fichajes comprimidos
 │
-├── README.md                  # Documentación del proyecto
-└── requirements.txt           # Dependencias del entorno
+├── 📁 output/                   # Resultados generados (autogenerado)
+│   ├── informe_validacion.xlsx # Informe completo de validación
+│   └── sepe_actualizado.xlsx   # Plantilla SEPE actualizada
+│
+├── 📁 backups/                  # Copias de seguridad (autogenerado)
+├── 📁 historial/                # Histórico de validaciones (autogenerado)
+└── 📁 temp/fichajes/            # Fichajes extraídos (temporal)
+```
 
-🚀 Ejecución de la aplicación
+---
 
-Desde la carpeta raíz del proyecto, ejecuta:
+## 🎮 Uso
 
+### Iniciar la aplicación
+
+```bash
 streamlit run app.py
+```
 
+La aplicación se abrirá automáticamente en tu navegador en `http://localhost:8501`
 
-Esto abrirá la interfaz web en tu navegador en:
+### Flujo de trabajo
 
-👉 http://localhost:8501
+#### 1️⃣ **Preparar los archivos de entrada**
 
-🧮 Uso paso a paso
+**`alumnos.xlsx`** - Debe contener estas columnas:
 
-Sube los archivos de datos desde la interfaz:
+| ID | Nombre | Empresa_asignada | Módulo | Horas_totales |
+|----|--------|------------------|--------|---------------|
+| A001 | Ana Pérez | TechData SL | M1 | 100 |
+| A001 | Ana Pérez | TechData SL | M2 | 80 |
+| A002 | Luis García | Informática Norte SA | M1 | 120 |
 
-alumnos.xlsx
+**`sepe_plantilla.xlsx`** - Plantilla oficial del SEPE:
 
-sepe_plantilla.xlsx
+| Nombre | DNI | Curso | Modulo_M1_% | Modulo_M2_% |
+|--------|-----|-------|-------------|-------------|
+| Ana Pérez | 12345678A | Ciberseguridad | | |
+| Luis García | 87654321B | Ciberseguridad | | |
 
-fichajes.zip
+**`fichajes.zip`** - Archivos de texto nombrados como:
+- `A001_fichaje_01.txt`
+- `A001_fichaje_M2_01.txt`
+- `A002_fichaje_01.txt`
 
-Pulsa “Analizar fichajes”.
+#### 2️⃣ **Cargar archivos en la aplicación**
 
-El sistema calculará automáticamente:
+1. Sube los tres archivos desde la interfaz web
+2. Ajusta los umbrales si es necesario:
+   - **Umbral de asistencia:** 75% (mínimo SEPE)
+   - **Coincidencia empresa:** 70% (matching fuzzy)
 
-Horas totales trabajadas por alumno y módulo.
+#### 3️⃣ **Ejecutar validación**
 
-Porcentaje de asistencia sobre las horas planificadas.
+1. Haz clic en **"🚀 EJECUTAR VALIDACIÓN"**
+2. El sistema procesará automáticamente:
+   - ✅ Extracción de fichajes del ZIP
+   - ✅ Lectura y análisis de cada fichaje
+   - ✅ Cálculo de horas trabajadas
+   - ✅ Detección de empresas
+   - ✅ Cálculo de porcentajes de asistencia
+   - ✅ Actualización de la plantilla SEPE
 
-Si cumple o no el mínimo del 75 % exigido.
+#### 4️⃣ **Revisar resultados**
 
-Descarga el resultado final en formato Excel compatible con el SEPE.
+Verás un dashboard con:
+- 📊 **Métricas generales:** Total alumnos, % que cumplen, alertas
+- 📋 **Tabla completa:** Todos los resultados detallados
+- 👤 **Visor por alumno:** Detalles individuales con fichajes
+- 📄 **Observaciones:** Alertas automáticas de anomalías
 
-🧪 Archivos de ejemplo incluidos
-alumnos.xlsx
-ID	Nombre	Empresa_asignada	Módulo	Horas_totales
-A001	Ana Pérez	TechData SL	M1	100
-A001	Ana Pérez	TechData SL	M2	80
-A002	Luis García	Informática Norte	M1	120
-A002	Luis García	Informática Norte	M2	60
-A003	María López	Sistemas Avanzados	M1	100
-sepe_plantilla.xlsx
-Nombre	DNI	Curso	Modulo_M1_%	Modulo_M2_%
-Ana Pérez	12345678A	Ciberseguridad		
-Luis García	87654321B	Ciberseguridad		
-María López	11223344C	Ciberseguridad		
-fichajes.zip
+#### 5️⃣ **Descargar informes**
 
-Contiene archivos de texto como:
+- 📥 **Informe de validación:** Resultados completos en Excel
+- 📥 **SEPE actualizado:** Plantilla oficial con porcentajes
+- 📦 **ZIP de evidencias:** Por alumno (opcional)
 
-A001_fichaje_01.txt
-A001_fichaje_M2_01.txt
-A002_fichaje_01.txt
-A002_fichaje_M2_01.txt
-...
+---
 
+## 📝 Formato de fichajes
 
-Cada archivo incluye los datos de empresa, módulo, horas de entrada y salida del alumno.
+### Ejemplo de fichaje en texto plano
 
-🧰 Tecnologías utilizadas
+```txt
+Empresa: TechData SL
+Fecha: 15/01/2025
+Módulo: M1
+Entrada: 09:00
+Salida: 14:00
+Observaciones: Jornada completa
+```
 
-Python 3.11
+### Formatos soportados
 
-Streamlit — Interfaz web interactiva
+El sistema detecta automáticamente múltiples formatos:
 
-Pandas — Análisis de datos
+```txt
+# Formato 1: Entrada/Salida explícito
+Entrada: 09:00
+Salida: 13:00
 
-OpenPyXL — Manipulación de archivos Excel
+# Formato 2: Rango con guión
+09:00 - 17:00
 
-Pillow — Soporte para imágenes de fichajes (si se usan)
+# Formato 3: De...a
+De 08:30 a 14:30
 
-🧾 Ejemplo de resultado
-Nombre	DNI	Curso	Modulo_M1_%	Modulo_M2_%	Cumple_75%
-Ana Pérez	12345678A	Ciberseguridad	78%	92%	✅
-Luis García	87654321B	Ciberseguridad	100%	70%	❌
-María López	11223344C	Ciberseguridad	55%	-	❌
-🔒 Validaciones y controles
+# Formato 4: Total explícito
+Total: 6 horas
+```
 
-Verificación automática de nombre del alumno, módulo y empresa.
+---
 
-Detección de fichajes con formato erróneo o incompleto.
+## 🧪 Datos de prueba
 
-Cálculo real de horas trabajadas según fichajes diarios.
+El repositorio incluye archivos de ejemplo en `/ejemplos/`:
 
-Control de mínimos del 75 % por módulo.
+```bash
+# Copiar archivos de prueba
+cp ejemplos/alumnos.xlsx data/
+cp ejemplos/sepe_plantilla.xlsx data/
+cp ejemplos/fichajes.zip data/
+```
 
-🧱 Mejoras futuras
+### Resultados esperados con datos de prueba
 
-Carga de imágenes de fichajes (PDF o JPG).
+| Alumno | Módulo | Horas | % Asist. | Cumple | Empresa |
+|--------|--------|-------|----------|--------|---------|
+| Ana Pérez | M1 | 12h | 12% | ❌ | ✅ |
+| Ana Pérez | M2 | 4h | 5% | ❌ | ✅ |
+| Luis García | M1 | 15h | 12.5% | ❌ | ✅ |
+| María López | M1 | 0h | 0% | ❌ | ⚠️ Sin fichajes |
 
-Panel de administración con historial.
+---
 
-Exportación de informes en PDF.
+## ⚙️ Configuración avanzada
 
-Conexión con bases de datos (SQLite o PostgreSQL).
+### Umbrales personalizables
 
-📜 Licencia
+Desde el sidebar de la aplicación puedes ajustar:
 
-Proyecto interno de SmartMind / Creado por Arancha Fernández
-Uso autorizado únicamente para fines educativos o administrativos relacionados con el SEPE.
+- **Umbral mínimo de asistencia (%)**: Por defecto 75% (SEPE)
+- **Coincidencia mínima empresa (%)**: Por defecto 70% (fuzzy matching)
+- **Mostrar fichajes en detalle**: Activar/desactivar vista previa
+
+### Variables de entorno (opcional)
+
+```bash
+# Activar modo debug
+export STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
+
+# Cambiar puerto
+export STREAMLIT_SERVER_PORT=8080
+```
+
+---
+
+## 🛠️ Características técnicas
+
+### Algoritmos implementados
+
+- **Fuzzy matching** con RapidFuzz para detección de empresas
+- **Expresiones regulares** para extracción de horarios
+- **Normalización de texto** para comparaciones robustas
+- **Validación de rangos** horarios (1-12h por fichaje)
+
+### Validaciones automáticas
+
+- ✅ Detección de fichajes vacíos o corruptos
+- ✅ Alertas de horas excesivas (>120% esperado)
+- ✅ Advertencias de empresas no coincidentes
+- ✅ Control de alumnos sin fichajes
+
+### Seguridad
+
+- 🔒 Backups automáticos con timestamp
+- 🔒 Historial inmutable de validaciones
+- 🔒 No modificación de archivos originales
+- 🔒 Validación de integridad de datos
+
+---
+
+## 📊 Casos de uso
+
+### ✅ Centros educativos
+- Validación masiva de prácticas FCT
+- Generación de informes para auditorías SEPE
+- Control de asistencia en empresas colaboradoras
+
+### ✅ Departamentos de orientación
+- Seguimiento individual de alumnos
+- Detección temprana de incumplimientos
+- Gestión de evidencias documentales
+
+### ✅ Coordinadores de FP
+- Supervisión de múltiples módulos y cursos
+- Exportación de datos para memorias anuales
+- Análisis de tasas de cumplimiento
+
+---
+
+## 🐛 Solución de problemas
+
+### Error: "Import 'streamlit' could not be resolved"
+
+**Causa:** VS Code no detecta el intérprete correcto
+
+**Solución:**
+1. Presiona `Ctrl + Shift + P`
+2. Busca: `Python: Select Interpreter`
+3. Selecciona el Python donde instalaste las librerías
+
+### Error: "Module not found: pandas"
+
+**Causa:** Dependencias no instaladas
+
+**Solución:**
+```bash
+pip install -r requirements.txt
+```
+
+### Error al compilar numpy/pandas
+
+**Causa:** Python 3.14 muy reciente, faltan compiladores
+
+**Solución:**
+```bash
+# Instalar versión estable de Python 3.11
+# O instalar Microsoft C++ Build Tools
+# https://visualstudio.microsoft.com/visual-cpp-build-tools/
+```
+
+### La app no se abre en el navegador
+
+**Causa:** Firewall o puerto ocupado
+
+**Solución:**
+```bash
+# Usar puerto diferente
+streamlit run app.py --server.port 8080
+
+# O abrir manualmente: http://localhost:8501
+```
+
+---
+
+## 🤝 Contribuir
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Haz fork del repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/NuevaCaracteristica`)
+3. Commit tus cambios (`git commit -m 'Añadir nueva característica'`)
+4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
+5. Abre un Pull Request
+
+---
+
+## 🗺️ Roadmap
+
+### Versión 2.0 (Próximamente)
+
+- [ ] 🖼️ Soporte para OCR de imágenes (JPG, PNG, PDF)
+- [ ] 📧 Notificaciones automáticas por email
+- [ ] 📈 Gráficos interactivos de asistencia
+- [ ] 🗄️ Base de datos SQLite para histórico
+- [ ] 🔐 Sistema de autenticación multiusuario
+- [ ] 📱 Diseño responsive para móviles
+- [ ] 🌍 Soporte multiidioma (ES/EN)
+- [ ] 📄 Exportación de informes en PDF
+
+---
+
+## 📜 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+```
+MIT License
+
+Copyright (c) 2025 SmartMind - Arancha Fernández
+
+Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia
+de este software y archivos de documentación asociados (el "Software"), para usar
+el Software sin restricciones, incluyendo sin limitación los derechos de usar,
+copiar, modificar, fusionar, publicar, distribuir, sublicenciar y/o vender copias
+del Software.
+```
+
+---
+
+## 👥 Autores
+
+**Arancha Fernández** - [GitHub](https://github.com/AranchaFF)
+
+---
+
+## 🙏 Agradecimientos
+
+- Equipo de SmartMind por el apoyo en el desarrollo
+- Comunidad de Streamlit por la excelente documentación
+- SEPE por los estándares de validación de prácticas
+
+---
+
+## 📞 Soporte
+
+¿Necesitas ayuda? Puedes:
+
+- 📧 Enviar un email a: soporte@smartmind.es
+- 🐛 Abrir un issue en GitHub
+- 💬 Unirte a nuestro Discord (próximamente)
+
+---
+
+<div align="center">
+
+**⭐ Si este proyecto te ha sido útil, considera darle una estrella en GitHub ⭐**
+
+Hecho con ❤️ para SmartMind
+
+[⬆ Volver arriba](#-verificador-de-prácticas-sepe--smartmind)
+
+</div>
