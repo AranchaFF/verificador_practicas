@@ -1,0 +1,8 @@
+streamlit
+pandas
+openpyxl
+pytesseract
+Pillow
+opencv-python
+rapidfuzz
+python-dateutil

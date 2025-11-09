@@ -1,0 +1,5 @@
+TechData SL
+Módulo M1
+Entrada: 09:00
+Salida: 17:00
+Comentario: Descanso de 1 hora incluido

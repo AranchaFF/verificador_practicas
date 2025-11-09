@@ -1,0 +1,5 @@
+Empresa: TechData SL
+Fecha: 15/01/2025
+Entrada: 09:00
+Salida: 13:00
+Total: 4 horas
