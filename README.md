@@ -1,5 +1,3 @@
-Aquí tienes el README completo en un único bloque:
-
 # 🧠 Verificador de Prácticas — SmartMind
 
 Aplicación desarrollada en **Python + Streamlit** para automatizar la verificación de las horas de prácticas de los alumnos en empresas colaboradoras, comparando los datos de fichajes con los módulos cursados y los informes del SEPE.
@@ -164,5 +162,5 @@ Conexión con bases de datos (SQLite o PostgreSQL).
 
 📜 Licencia
 
-Proyecto interno de SmartMind / Informática Movifer.
+Proyecto interno de SmartMind / Creado por Arancha Fernández
 Uso autorizado únicamente para fines educativos o administrativos relacionados con el SEPE.
